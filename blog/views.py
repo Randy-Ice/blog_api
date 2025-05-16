@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import viewsets
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView, CreateAPIView
 from rest_framework.mixins import CreateModelMixin
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated, IsAdminUser
@@ -11,10 +12,10 @@ from rest_framework.filters import SearchFilter, OrderingFilter
 from rest_framework.pagination import PageNumberPagination
 #*end
 
-from .models import Blog, Comment, Author
+from .models import Blog, Comment, Author, Category, Tag
 from .permissions import IsAuthorOrReadOnly, IsAuthorOrReadOnlyProfile
 from .serializers import SimpleBlogSerializer, DetailBlogSerializer, CommentCRUDSerializer, \
-    CommentPostSerializer, AuthorPostSerializer
+    CommentPostSerializer, AuthorPostSerializer, CategoryPostSerializer, TagPostSerializer
 
 
 # Create your views here.
@@ -61,3 +62,13 @@ class AuthorDetailView(RetrieveUpdateDestroyAPIView):
     def me(self, request):
         return Request(request.user.id)
 
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategoryPostSerializer
+    permission_classes = [IsAdminUser]
+
+class TagViewSet(viewsets.ModelViewSet):
+    queryset = Tag.objects.all()
+    serializer_class = TagPostSerializer
+    permission_classes = [IsAdminUser]
