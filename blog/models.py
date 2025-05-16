@@ -26,6 +26,7 @@ class Blog(models.Model):
     important = models.CharField(max_length=1, choices=IMPORTANCE_CHOICES, default=IMPORTANCE_NO)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(null=True)
 
     def __str__(self):
         return self.title
