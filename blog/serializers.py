@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import Blog, Comment, Author
+from .models import Blog, Comment, Author, Tag, Category
+
 
 class SimpleBlogSerializer(serializers.ModelSerializer):
     class Meta:
@@ -35,4 +36,12 @@ class AuthorPostSerializer(serializers.ModelSerializer):
         fields = ['id', 'user_id', 'birth_date', 'bio']
 
 
+class CategoryPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = ['id', 'title']
 
+class TagPostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Tag
+        fields = ['id', 'name', 'created_at', 'updated_at']
